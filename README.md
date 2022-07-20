@@ -13,11 +13,9 @@ After that run the following command to see the app:
 
     php artisan october:install
 
-You may also watch these introductory videos for [beginners](https://vimeo.com/79963873) and [advanced users](https://vimeo.com/172202661).
-
 ## Development Team
 
-October was created by [Alexey Bobkov](https://www.linkedin.com/in/alexey-bobkov-232ba02b/) and [Samuel Georges](https://www.linkedin.com/in/samuel-georges-0a964131/), who both continue to develop the platform.
+This application was created by [Yunusali Khakimjanovich](https://www.linkedin.com/in/khakimjanovich/)
 
 ## Foundation library
 
