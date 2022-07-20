@@ -1,0 +1,58 @@
+version: "3.7"
+services:
+    app:
+        build:
+            args:
+                user: www
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        image: commerce_october/admin
+        container_name: commerce_october
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - ./:/var/www/html/app
+            - ./docker-compose/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - commerce_october
+
+    webserver:
+        image: nginx:alpine
+        container_name: commerce_october_nginx
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "8083:80"
+            - "4446:443"
+        volumes:
+            - ./:/var/www/html/app
+            - ./docker-compose/nginx:/etc/nginx/conf.d/
+        networks:
+            - commerce_october
+    db:
+        image: mariadb:10.5.8
+        tty: true
+        ports:
+            - "3309:3306"
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: commerce_october
+            MYSQL_USER: root
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_PASSWORD: password
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            -   type: volume
+                source: mysqldata
+                target: /var/lib/mysql
+        networks:
+            - commerce_october
+networks:
+    commerce_october:
+        driver: bridge
+
+volumes:
+    mysqldata:
+
